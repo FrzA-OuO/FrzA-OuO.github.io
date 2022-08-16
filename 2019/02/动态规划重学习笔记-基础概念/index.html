@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"frza-ouo.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"","post_body":"","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="划水划的太久了，需要做一些复健运动。这篇文章拿来更新最近重新学习DP的笔记。 动态规划动态规划是用于解决最优化问题的一种方法，而不是某一个算法。对于不同问题，最优解的条件不同，因而有着不同的DP设计方法。因而在实际中必须对具体问题分析处理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划重学习笔记（一）基础概念">
+<meta property="og:url" content="https://frza-ouo.github.io/2019/02/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E9%87%8D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:site_name" content="Yukiha&#39;s Blog">
+<meta property="og:description" content="划水划的太久了，需要做一些复健运动。这篇文章拿来更新最近重新学习DP的笔记。 动态规划动态规划是用于解决最优化问题的一种方法，而不是某一个算法。对于不同问题，最优解的条件不同，因而有着不同的DP设计方法。因而在实际中必须对具体问题分析处理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="data:image/png;base64,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">
+<meta property="article:published_time" content="2019-02-22T12:35:00.000Z">
+<meta property="article:modified_time" content="2019-02-22T12:35:00.000Z">
+<meta property="article:author" content="Yukiha Chen">
+<meta property="article:tag" content="DP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/png;base64,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">
+
+
+<link rel="canonical" href="https://frza-ouo.github.io/2019/02/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E9%87%8D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://frza-ouo.github.io/2019/02/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E9%87%8D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/","path":"2019/02/动态规划重学习笔记-基础概念/","title":"动态规划重学习笔记（一）基础概念"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>动态规划重学习笔记（一）基础概念 | Yukiha's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Yukiha's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-text">动态规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9E%8B"><span class="nav-text">基本模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E4%BC%98%E5%8C%96%E5%8E%9F%E7%90%86%E4%B8%8E%E6%97%A0%E5%90%8E%E6%95%88%E6%80%A7"><span class="nav-text">最优化原理与无后效性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%9A%84%E6%9C%80%E4%BC%98%E5%8C%96%E5%8E%9F%E7%90%86"><span class="nav-text">动态规划的最优化原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%9A%84%E6%97%A0%E5%90%8E%E6%95%88%E6%80%A7%E5%8E%9F%E5%88%99"><span class="nav-text">动态规划的无后效性原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E7%9A%84%E4%B8%80%E8%88%AC%E6%A8%A1%E5%BC%8F"><span class="nav-text">动态规划设计方法的一般模式</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yukiha Chen"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Yukiha Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/FrzA-OuO" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;FrzA-OuO" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:Frz_A@outlook.com" title="E-Mail → mailto:Frz_A@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/user/5505#practice" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;user&#x2F;5505#practice" rel="noopener" target="_blank">洛谷</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://vjudge.net/user/FrozenApple" title="https:&#x2F;&#x2F;vjudge.net&#x2F;user&#x2F;FrozenApple" rel="noopener" target="_blank">VJudge</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://loj.ac/u/FrozenApple" title="https:&#x2F;&#x2F;loj.ac&#x2F;u&#x2F;FrozenApple" rel="noopener" target="_blank">LOJ</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://frza-ouo.github.io/2019/02/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E9%87%8D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Yukiha Chen">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yukiha's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="动态规划重学习笔记（一）基础概念 | Yukiha's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          动态规划重学习笔记（一）基础概念
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-02-22 21:35:00" itemprop="dateCreated datePublished" datetime="2019-02-22T21:35:00+09:00">2019-02-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>划水划的太久了，需要做一些复健运动。这篇文章拿来更新最近重新学习DP的笔记。</p>
+<h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><p>动态规划是用于解决<strong>最优化问题</strong>的一种方法，而不是某一个算法。对于不同问题，最优解的条件不同，因而有着不同的DP设计方法。因而在实际中必须对具体问题分析处理。</p>
+<span id="more"></span>
+
+<h2 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h2><p>动态规划适用于<strong>多阶段决策过程的最优化问题</strong>。多阶段决策过程，是指问题可以按时间顺序分解成若干相互联系的阶段，在每一个阶段都要做出决策，全部过程的决策是一个决策序列。</p>
+<p>在每个阶段所采取的决策，一般来说是与阶段有关的。决策依赖于当前的状态，同时会引起状态的转移。一个决策序列就是在变化的状态中产生出来的，称这种解决多阶段决策最优化的过程为动态规划程序设计方法。</p>
+<h6 id="例1-最短路径问题"><a href="#例1-最短路径问题" class="headerlink" title="例1 最短路径问题"></a>例1 最短路径问题</h6><blockquote>
+<p>下图给出了一个地图，地图中的每个顶点代表一个城市，两个城市间的一条连线代表道路，连线上的数值代表道路的长度。现在想从城市A到达城市E，怎样走路程最短？最短路程的长度是多少？<br><img data-src="data:image/png;base64,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" alt="例9.1 图"><br>——《信息学奥赛一本通第5版》例9.1</p>
+</blockquote>
+<p>把A到E的全过程分成四个阶段，用K表示阶段变量，第1阶段有一个初始状态A，有两条可供选择的支路A-B1、A-B2；第2阶段有两个初始状态B1、B2，B1有三条可供选择的支路，B2有两条可供选择的支路……。用DK（XI，X+1J）表示在第K阶段由初始状态XI到下阶段的初始状态X+1J的路径距离，FK（XI）表示从第K阶段的XI到终点E的最短距离，利用倒推的方法，求解A到E的最短距离。</p>
+<p>对应的C++程序如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="type">long</span> d[<span class="number">5</span>][<span class="number">5</span>][<span class="number">5</span>],f[<span class="number">10</span>][<span class="number">10</span>];</span><br><span class="line">   <span class="built_in">memset</span>(d,<span class="number">42</span>,<span class="built_in">sizeof</span>(d));          <span class="comment">//有些路径是不通的,赋值为较大值，用于判断</span></span><br><span class="line">   d[<span class="number">1</span>][<span class="number">1</span>][<span class="number">1</span>]=<span class="number">5</span>;d[<span class="number">1</span>][<span class="number">1</span>][<span class="number">2</span>]=<span class="number">3</span>;d[<span class="number">2</span>][<span class="number">1</span>][<span class="number">1</span>]=<span class="number">1</span>;  <span class="comment">//以下给可通路径赋正常值</span></span><br><span class="line">   d[<span class="number">2</span>][<span class="number">1</span>][<span class="number">2</span>]=<span class="number">6</span>;d[<span class="number">2</span>][<span class="number">1</span>][<span class="number">3</span>]=<span class="number">3</span>;d[<span class="number">2</span>][<span class="number">2</span>][<span class="number">2</span>]=<span class="number">8</span></span><br><span class="line">   d[<span class="number">2</span>][<span class="number">2</span>][<span class="number">4</span>]=<span class="number">4</span>;d[<span class="number">3</span>][<span class="number">1</span>][<span class="number">1</span>]=<span class="number">5</span>;d[<span class="number">3</span>][<span class="number">1</span>][<span class="number">2</span>]=<span class="number">6</span>;</span><br><span class="line">   d[<span class="number">3</span>][<span class="number">2</span>][<span class="number">1</span>]=<span class="number">5</span>;d[<span class="number">3</span>][<span class="number">3</span>][<span class="number">3</span>]=<span class="number">8</span>;d[<span class="number">3</span>][<span class="number">4</span>][<span class="number">3</span>]=<span class="number">3</span>;</span><br><span class="line">   d[<span class="number">4</span>][<span class="number">1</span>][<span class="number">1</span>]=<span class="number">3</span>;d[<span class="number">4</span>][<span class="number">2</span>][<span class="number">1</span>]=<span class="number">4</span>;d[<span class="number">4</span>][<span class="number">3</span>][<span class="number">1</span>]=<span class="number">3</span>; </span><br><span class="line">   <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;=<span class="number">9</span>;++i)</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j=<span class="number">0</span>;j&lt;=<span class="number">9</span>;++j) f[i][j]=<span class="number">10000000</span>;</span><br><span class="line">   f[<span class="number">5</span>][<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">   <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">4</span>;i&gt;=<span class="number">1</span>;--i)</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j=<span class="number">1</span>;j&lt;=<span class="number">4</span>;++j)</span><br><span class="line">     <span class="keyword">for</span> (<span class="type">int</span> k=<span class="number">1</span>;k&lt;=<span class="number">4</span>;++k)</span><br><span class="line">       <span class="keyword">if</span> (f[i][j]&gt;d[i][j][k]+f[i+<span class="number">1</span>][k])    <span class="comment">//即使走非法路径，也不影响答案</span></span><br><span class="line">          f[i][j]=d[i][j][k]+f[i+<span class="number">1</span>][k];</span><br><span class="line">    cout&lt;&lt;f[<span class="number">1</span>][<span class="number">1</span>]&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ol>
+<li><p>阶段和阶段变量：</p>
+<p> 用动态规划求解一个问题时，需要将问题的全过程恰当地分成若干个相互联系的阶段，以便按一定的次序去求解。描述阶段的变量称为阶段变量，通常用K表示，阶段的划分一般是根据时间和空间的自然特征来划分，同时阶段的划分要便于把问题转化成多阶段决策过程，如例题1中，可将其划分成4个阶段，即K &#x3D; 1，2，3，4。</p>
+</li>
+<li><p>状态和状态变量：</p>
+<p> 某一阶段的出发位置称为状态，通常一个阶段包含若干状态。一般地，状态可由变量来描述，用来描述状态的变量称为状态变量。如例题1中，C3是一个状态变量。</p>
+</li>
+<li><p>决策、决策变量和决策允许集合：</p>
+<p> 在对问题的处理中作出的每种选择性的行动就是决策。即从该阶段的每一个状态出发，通过一次选择性的行动转移至下一阶段的相应状态。一个实际问题可能要有多次决策和多个决策点，在每一个阶段的每一个状态中都需要有一次决策，决策也可以用变量来描述，称这种变量为决策变量。在实际问题中，决策变量的取值往往限制在某一个范围之内，此范围称为允许决策集合。如例题1中，F3（C3）就是一个决策变量。</p>
+</li>
+<li><p>策略和最优策略：</p>
+<p> 所有阶段依次排列构成问题的全过程。全过程中各阶段决策变量所组成的有序总体称为策略。在实际问题中，从决策允许集合中找出最优效果的策略成为最优策略。</p>
+</li>
+<li><p>状态转移方程</p>
+<p> 前一阶段的终点就是后一阶段的起点，对前一阶段的状态作出某种决策，产生后一阶段的状态，这种关系描述了由k阶段到k+1阶段状态的演变规律，称为状态转移方程。</p>
+</li>
+</ol>
+<h2 id="最优化原理与无后效性"><a href="#最优化原理与无后效性" class="headerlink" title="最优化原理与无后效性"></a>最优化原理与无后效性</h2><p>一般来说，能够采用动态规划方法求解的问题，必须满足<strong>最优化原理</strong>和<strong>无后效性原则</strong></p>
+<h3 id="动态规划的最优化原理"><a href="#动态规划的最优化原理" class="headerlink" title="动态规划的最优化原理"></a>动态规划的最优化原理</h3><p>动态规划整个过程的最优策略具有这样的性质：无论过去的状态和决策如何，对前面的决策所形成的状态而言，余下的诸决策必须构成最优策略。这可以理解为<strong>子问题的局部最优将导致整个问题的全局最优</strong>。</p>
+<h3 id="动态规划的无后效性原则"><a href="#动态规划的无后效性原则" class="headerlink" title="动态规划的无后效性原则"></a>动态规划的无后效性原则</h3><p>无后效性原则指某阶段的状态一旦确定，则此后过程的演变不再受此前各状态及决策的影响。也即<strong>「未来与过去无关」</strong>。当前的状态是此前历史的一个完整的总结，此前的历史只能通过当前的状态去影响过程未来的演变。</p>
+<p>由此可见，对于不能划分阶段的问题，不能运用动态规划来解；对于能划分阶段，但不符合最优化原理的，也不能用动态规划来解；既能划分阶段，又符合最优化原理的，但不具备无后效性原则，还是不能用动态规划来解；误用动态规划程序设计方法求解会导致错误的结果。</p>
+<h2 id="动态规划设计方法的一般模式"><a href="#动态规划设计方法的一般模式" class="headerlink" title="动态规划设计方法的一般模式"></a>动态规划设计方法的一般模式</h2><p>动态规划所处理的问题是一个多阶段决策问题，<strong>一般由初始状态开始，通过对中间阶段决策的选择，达到结束状态；或倒过来，从结束状态开始，通过对中间阶段决策的选择，达到初始状态</strong>。这些决策形成一个决策序列，同时确定了完成整个过程的一条活动路线，通常是求最优活动路线。</p>
+<p>动态规划的设计都有着一定的模式，一般要经历以下几个步骤：</p>
+<ol>
+<li><p>划分阶段</p>
+<p> 按照问题的时间或空间特征，把问题划分为若干个阶段。在划分阶段时，注意划分后的阶段一定是有序的或者是可排序的，否则问题就无法求解。</p>
+</li>
+<li><p>确定状态和状态变量</p>
+<p> 将问题发展到各个阶段时所处于的各种客观情况用不同的状态表示出来。当然，状态的选择要满足无后效性。</p>
+</li>
+<li><p>确定决策并写出状态转移方程</p>
+<p> 因为决策和状态转移有着天然的联系，状态转移就是根据上一阶段的状态和决策来导出本阶段的状态。所以如果确定了决策，状态转移方程也就可以写出。但事实上常常是反过来做，根据相邻两段的各个状态之间的关系来确定决策。</p>
+</li>
+<li><p>寻找边界条件</p>
+<p> 给出的状态转移方程是一个递推式，需要一个递推的终止条件或边界条件。</p>
+</li>
+</ol>
+<p>下一篇会介绍递推与动态规划的关系。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Yukiha Chen
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://frza-ouo.github.io/2019/02/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E9%87%8D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" title="动态规划重学习笔记（一）基础概念">https://frza-ouo.github.io/2019/02/动态规划重学习笔记-基础概念/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/DP/" rel="tag"># DP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/11/Gopher-II/" rel="prev" title="[POJ 2536]Gopher II">
+                  <i class="fa fa-chevron-left"></i> [POJ 2536]Gopher II
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/02/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E9%87%8D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%B8%8E%E9%80%92%E6%8E%A8/" rel="next" title="动态规划重学习笔记（二）动态规划与递推">
+                  动态规划重学习笔记（二）动态规划与递推 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yukiha Chen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

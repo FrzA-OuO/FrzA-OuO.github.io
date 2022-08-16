@@ -5,7 +5,7 @@
   --text-color: #555;
   --blockquote-color: #666;
   --link-color: #555;
-  --link-hover-color: #222;
+  --link-hover-color: #5762a3;
   --brand-color: #222;
   --brand-hover-color: #222;
   --table-row-odd-bg-color: #f9f9f9;
@@ -1671,12 +1671,6 @@ header.header {
 .use-motion .comments {
   visibility: hidden;
 }
-.use-motion .post-header {
-  visibility: hidden;
-}
-.use-motion .post-body {
-  visibility: hidden;
-}
 .use-motion .collection-header {
   visibility: hidden;
 }
@@ -2639,7 +2633,7 @@ hr {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #c1f16a;
+  background: #78ff9f;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
